@@ -1,3 +1,3 @@
 pycodestyle .
-pylint xyz/
-mypy xyz/ --strict
+pylint papi/
+mypy papi/ --strict
