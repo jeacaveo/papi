@@ -1,3 +1,3 @@
 pycodestyle .
-pylint papi/
-mypy papi/ --strict
+pylint papi/ units/
+mypy papi/ units/ --strict

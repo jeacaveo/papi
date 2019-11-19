@@ -1,4 +1,4 @@
 # Run tests and generate coverage report.
 
-coverage run --source=. -m unittest
+coverage run --source=. manage.py test -v 2
 coverage report -m
