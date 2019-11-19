@@ -32,3 +32,7 @@ Development environment
 3. Run linters:
 
     ./runlinters.sh
+
+4. Run migrations:
+
+    python manage.py migrate
