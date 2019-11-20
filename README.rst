@@ -33,6 +33,6 @@ Development environment
 
     ./runlinters.sh
 
-4. Run migrations:
+4. No need to run migrations, but if you must:
 
     python manage.py migrate
