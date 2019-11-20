@@ -19,9 +19,14 @@ from django.urls import (
     re_path,
     )
 
-from rest_framework import permissions
+from rest_framework import (
+    permissions,
+    routers,
+    )
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
+
+from units import views as unit_views
 
 
 SchemaView = get_schema_view(
@@ -38,18 +43,23 @@ SchemaView = get_schema_view(
     )
 
 
+ROUTER = routers.DefaultRouter()
+ROUTER.register(r'latest/units', unit_views.LatestUnitVersionViewSet)
+
+
 urlpatterns = [  # pylint: disable=invalid-name
-    path("api/auth/", include("rest_framework.urls")),
     re_path(
-        r'^swagger(?P<format>\.json|\.yaml)$',
+        r'^api/docs/swagger(?P<format>\.json|\.yaml)$',
         SchemaView.without_ui(cache_timeout=0),
         name='schema-json'),
     re_path(
-        r'^swagger/$',
+        r'^api/docs/swagger/$',
         SchemaView.with_ui('swagger', cache_timeout=0),
         name='schema-swagger-ui'),
     re_path(
-        r'^redoc/$',
+        r'^api/docs/redoc/$',
         SchemaView.with_ui('redoc', cache_timeout=0),
         name='schema-redoc'),
+    path("api/auth/", include("rest_framework.urls")),
+    path("api/", include(ROUTER.urls)),
     ]
