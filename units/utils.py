@@ -15,9 +15,9 @@ from pyparsing import (
     )
 
 
-OPERATORS = oneOf(": < = > >= <= != <>")
-PARAM = Word(alphas) + Optional(OPERATORS + Word(alphanums))
-QUERY = delimitedList(Combine(PARAM), delim=",")
+SEARCH_OPERATORS = oneOf(": < = > >= <= != <>")
+SEARCH_FILTER = Word(alphas) + Optional(SEARCH_OPERATORS + Word(alphanums))
+SEARCH_QUERY = delimitedList(Combine(SEARCH_FILTER), delim=",")
 
 
 def parse_query(raw_query: str) -> Iterator[List[str]]:
@@ -51,7 +51,7 @@ def parse_query(raw_query: str) -> Iterator[List[str]]:
     try:
         return map(
             list,
-            map(PARAM.parseString, QUERY.parseString(raw_query))
+            map(SEARCH_FILTER.parseString, SEARCH_QUERY.parseString(raw_query))
             )
     except ParseException:
         return (_ for _ in [])  # empty iterator
