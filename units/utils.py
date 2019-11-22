@@ -15,6 +15,11 @@ from pyparsing import (
     )
 
 
+OPERATORS = oneOf(": < = > >= <= != <>")
+PARAM = Word(alphas) + Optional(OPERATORS + Word(alphanums))
+QUERY = delimitedList(Combine(PARAM), delim=",")
+
+
 def parse_query(raw_query: str) -> Iterator[List[str]]:
     """
     Get valid params from query string.
@@ -42,14 +47,11 @@ def parse_query(raw_query: str) -> Iterator[List[str]]:
         ]
 
     """
-    operators = oneOf(": < = > >= <= != <>")
-    param = Word(alphas) + Optional(operators + Word(alphanums))
-    query = delimitedList(Combine(param), delim=",")
 
     try:
         return map(
             list,
-            map(param.parseString, query.parseString(raw_query))
+            map(PARAM.parseString, QUERY.parseString(raw_query))
             )
     except ParseException:
         return (_ for _ in [])  # empty iterator
