@@ -8,13 +8,30 @@ from units.utils import (
     )
 
 
-class ParseQueryDirtyTests(unittest.TestCase):
-    """ Tests fail cases for units.utils.parse_query """
+class ParseQueryTests(unittest.TestCase):
+    """ Tests all cases for units.utils.parse_query """
 
-    def test_invalids(self):
-        """ Test all cases that include failures. """
+    def test_cases(self):
+        """ Test all cases. """
         # Given
         data = {
+            "multiple": {
+                "query": "gold=5, blue!=3,    red>=1,energy:2",
+                "expected_result": [
+                    ["gold", "=", "5"],
+                    ["blue", "!=", "3"],
+                    ["red", ">=", "1"],
+                    ["energy", ":", "2"],
+                    ]
+                },
+            "single": {
+                "query": "gold=5",
+                "expected_result": [["gold", "=", "5"]]
+                },
+            "no_operator": {
+                "query": "gold",
+                "expected_result": [["gold"]]
+                },
             "mixed_end_invalid": {
                 "query": "gold=5, 5",
                 "expected_result": [["gold", "=", "5"]]
@@ -49,78 +66,11 @@ class ParseQueryDirtyTests(unittest.TestCase):
                     params["expected_result"])
 
 
-class ParseQueryCleanTests(unittest.TestCase):
-    """ Tests success cases for units.utils.parse_query. """
+class FilterToDjangoTests(unittest.TestCase):
+    """ Tests all cases for units.utils.filter_to_lookup """
 
-    def test_valids(self):
-        """ Test all cases that don"t include success. """
-        # Given
-        data = {
-            "multiple": {
-                "query": "gold=5, blue!=3,    red>=1,energy:2",
-                "expected_result": [
-                    ["gold", "=", "5"],
-                    ["blue", "!=", "3"],
-                    ["red", ">=", "1"],
-                    ["energy", ":", "2"],
-                    ]
-                },
-            "single": {
-                "query": "gold=5",
-                "expected_result": [["gold", "=", "5"]]
-                },
-            "no_operator": {
-                "query": "gold",
-                "expected_result": [["gold"]]
-                },
-            }
-
-        # When/Then
-        for name, params in data.items():
-            with self.subTest(name):
-                self.assertEqual(
-                    list(parse_query(params["query"])),
-                    params["expected_result"])
-
-
-class FilterToDjangoDirtyTests(unittest.TestCase):
-    """ Tests failure cases for units.utils.filter_to_lookup. """
-
-    def test_invalids(self):
-        """ Test all cases that include some failure. """
-        # Given
-        data = {
-            "empty": {
-                "filter": [],
-                "expected_result": {},
-                },
-            "no_value": {
-                "filter": ["gold", "="],
-                "expected_result": {},
-                },
-            "too_many": {
-                "filter": ["gold", "=", "5", "6"],
-                "expected_result": {},
-                },
-            "bad_operator": {
-                "filter": ["gold", "invalid", "5"],
-                "expected_result": {},
-                },
-            }
-
-        # When/Then
-        for name, params in data.items():
-            with self.subTest(name):
-                self.assertEqual(
-                    filter_to_lookup(params["filter"]),
-                    params["expected_result"])
-
-
-class FilterToDjangoCleanTests(unittest.TestCase):
-    """ Tests success cases for units.utils.filter_to_lookup. """
-
-    def test_valids(self):
-        """ Test all cases that don't include failure. """
+    def test_cases(self):
+        """ Test all cases. """
         # Given
         data = {
             "equal": {
@@ -159,6 +109,22 @@ class FilterToDjangoCleanTests(unittest.TestCase):
                 "filter": ["name", ":", "5"],
                 "expected_result": {"name__icontains": 5},
                 },
+            "empty": {
+                "filter": [],
+                "expected_result": {},
+                },
+            "no_value": {
+                "filter": ["gold", "="],
+                "expected_result": {},
+                },
+            "too_many": {
+                "filter": ["gold", "=", "5", "6"],
+                "expected_result": {},
+                },
+            "bad_operator": {
+                "filter": ["gold", "invalid", "5"],
+                "expected_result": {},
+                },
             }
 
         # When/Then
@@ -169,32 +135,11 @@ class FilterToDjangoCleanTests(unittest.TestCase):
                     params["expected_result"])
 
 
-class IncludesExcludesDirtyTests(unittest.TestCase):
-    """ Tests failure cases for units.utils.includes_excludes """
+class IncludesExcludesTests(unittest.TestCase):
+    """ Tests all cases for units.utils.inclues_excludes """
 
-    def test_invalids(self):
-        """ Test all cases that include some failure. """
-        # Given
-        data = {
-            "empty": {
-                "data": "",
-                "expected_result": ({}, {}),
-                },
-            }
-
-        # When/Then
-        for name, params in data.items():
-            with self.subTest(name):
-                self.assertEqual(
-                    includes_excludes(params["data"]),
-                    params["expected_result"])
-
-
-class IncludesExcludesCleanTests(unittest.TestCase):
-    """ Tests success cases for units.utils.inclues_excludes. """
-
-    def test_valids(self):
-        """ Test all cases that don't include failure. """
+    def test_cases(self):
+        """ Test all cases. """
         # Given
         data = {
             "includes": {
@@ -211,6 +156,10 @@ class IncludesExcludesCleanTests(unittest.TestCase):
                 "data": "gold=5,gold!=5",
                 "expected_result": (
                     {"gold__icontains": 5}, {"gold__icontains": 5}),
+                },
+            "empty": {
+                "data": "",
+                "expected_result": ({}, {}),
                 },
             }
 
