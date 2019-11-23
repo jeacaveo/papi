@@ -3,6 +3,7 @@ import unittest
 
 from units.utils import (
     filter_to_lookup,
+    includes_excludes,
     parse_query,
     )
 
@@ -165,4 +166,57 @@ class FilterToDjangoCleanTests(unittest.TestCase):
             with self.subTest(name):
                 self.assertEqual(
                     filter_to_lookup(params["filter"]),
+                    params["expected_result"])
+
+
+class IncludesExcludesDirtyTests(unittest.TestCase):
+    """ Tests failure cases for units.utils.includes_excludes """
+
+    def test_invalids(self):
+        """ Test all cases that include some failure. """
+        # Given
+        data = {
+            "empty": {
+                "data": "",
+                "expected_result": ({}, {}),
+                },
+            }
+
+        # When/Then
+        for name, params in data.items():
+            with self.subTest(name):
+                self.assertEqual(
+                    includes_excludes(params["data"]),
+                    params["expected_result"])
+
+
+class IncludesExcludesCleanTests(unittest.TestCase):
+    """ Tests success cases for units.utils.inclues_excludes. """
+
+    def test_valids(self):
+        """ Test all cases that don't include failure. """
+        # Given
+        data = {
+            "includes": {
+                "data": "gold=5",
+                "expected_result": (
+                    {"gold__icontains": 5}, {}),
+                },
+            "excludes": {
+                "data": "gold!=5",
+                "expected_result": (
+                    {}, {"gold__icontains": 5}),
+                },
+            "both": {
+                "data": "gold=5,gold!=5",
+                "expected_result": (
+                    {"gold__icontains": 5}, {"gold__icontains": 5}),
+                },
+            }
+
+        # When/Then
+        for name, params in data.items():
+            with self.subTest(name):
+                self.assertEqual(
+                    includes_excludes(params["data"]),
                     params["expected_result"])
