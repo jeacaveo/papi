@@ -36,3 +36,12 @@ Development environment
 4. No need to run migrations, but if you must:
 
     python manage.py migrate
+
+Documenation
+------------
+
+- Go to any of this endpoints for more info:
+
+    /api/docs/swagger/
+
+    /api/docs/redoc/

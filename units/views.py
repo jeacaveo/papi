@@ -9,7 +9,14 @@ from units.utils import includes_excludes
 
 
 class LatestUnitVersionViewSet(viewsets.ReadOnlyModelViewSet):  # type: ignore
-    """ API endpoint for latest version of a unit. """
+    """
+    API endpoint for latest version of each unit.
+
+    Sample query:
+
+    /api/latest/units/?q=gold>3,frontline=true,abilities="gain X",name!=head
+
+    """
 
     # pylint: disable=no-member
     queryset = LatestUnitVersionView.objects.filter()
