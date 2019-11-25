@@ -3,6 +3,7 @@ from typing import (
     Dict,
     Iterator,
     List,
+    Optional as TOptional,
     Tuple,
     Union,
     )
@@ -109,7 +110,7 @@ def filter_to_lookup(data: List[str]) -> Dict[str, Union[str, int]]:
 
 
 def includes_excludes(
-        data: str
+        data: str, allowed: TOptional[List[str]] = None
         ) -> Tuple[Dict[str, Union[str, int]], Dict[str, Union[str, int]]]:
     """
     Convert query string into a dict of includes and excludes.
@@ -118,6 +119,8 @@ def includes_excludes(
     ----------
     data : str
         String to be parsed.
+    allowed : list(str), optional
+        List of fields to consider. If not provided, allow all.
 
     Returns
     -------
@@ -134,11 +137,15 @@ def includes_excludes(
     """
     includes = {}
     excludes = {}
+    ignored = {}
     for raw_filter in parse_query(data):
         negative_operators = ["!=", "<>"]
         lookup = filter_to_lookup(raw_filter)
-        # If operator for filter is negative, use it in exclude
-        if set(negative_operators).intersection(raw_filter):
+
+        # Only consider allowed fields
+        if (allowed and raw_filter[0] not in allowed) or False:
+            ignored.update(lookup)
+        elif set(negative_operators).intersection(raw_filter):
             excludes.update(lookup)
         else:
             includes.update(lookup)

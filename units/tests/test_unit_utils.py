@@ -173,3 +173,15 @@ class IncludesExcludesTests(unittest.TestCase):
                 self.assertEqual(
                     includes_excludes(params["data"]),
                     params["expected_result"])
+
+    def test_allowed(self):
+        """ Test only return keys in the allowed list. """
+        # Given
+        data = "gold=5,bad_field=5"
+        expected_result = {"gold__icontains": 5}, {}
+
+        # When
+        result = includes_excludes(data, allowed=["gold"])
+
+        # Then
+        self.assertEqual(result, expected_result)
