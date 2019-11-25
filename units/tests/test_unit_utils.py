@@ -32,6 +32,10 @@ class ParseQueryTests(unittest.TestCase):
                 "query": "gold",
                 "expected_result": [["gold"]]
                 },
+            "underscore": {
+                "query": "some_field",
+                "expected_result": [["some_field"]]
+                },
             "mixed_end_invalid": {
                 "query": "gold=5, 5",
                 "expected_result": [["gold", "=", "5"]]
