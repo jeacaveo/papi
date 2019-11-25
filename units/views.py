@@ -29,5 +29,10 @@ class LatestUnitVersionViewSet(viewsets.ReadOnlyModelViewSet):  # type: ignore
         Split filters into includes and excludes depeding on the operator
 
         """
-        includes, excludes = includes_excludes(self.request.GET.get("q") or "")
+        includes, excludes = includes_excludes(
+            self.request.GET.get("q") or "",
+            allowed=[
+                column.name
+                for column in LatestUnitVersionView._meta.concrete_fields]
+            )
         return self.queryset.filter(**includes).exclude(**excludes)
