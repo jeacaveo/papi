@@ -32,7 +32,7 @@ OPERATORS_MAP = {
 SEARCH_OPERATORS = oneOf(" ".join(OPERATORS_MAP.keys()))
 SEARCH_FILTER = (
     Word(alphas + "_") +
-    Optional(SEARCH_OPERATORS + Word(alphanums + "_"))
+    Optional(SEARCH_OPERATORS + Word(alphanums + "_" + " "))
     )
 SEARCH_QUERY = delimitedList(Combine(SEARCH_FILTER), delim=",")
 

@@ -36,6 +36,10 @@ class ParseQueryTests(unittest.TestCase):
                 "query": "some_field",
                 "expected_result": [["some_field"]]
                 },
+            "spaces": {
+                "query": "name=double quoted",
+                "expected_result": [["name", "=", "double quoted"]]
+                },
             "mixed_end_invalid": {
                 "query": "gold=5, 5",
                 "expected_result": [["gold", "=", "5"]]
