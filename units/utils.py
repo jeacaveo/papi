@@ -36,6 +36,29 @@ SEARCH_FILTER = (
     )
 SEARCH_QUERY = delimitedList(Combine(SEARCH_FILTER), delim=",")
 
+SYNONYMS_MAP = {
+    "n": "name",
+    "au": "gold",
+    "g": "green",
+    "b": "blue",
+    "r": "red",
+    "e": "energy",
+    "x": "attack",
+    "h": "health",
+    "su": "supply",
+    "fl": "frontline",
+    "f": "fragile",
+    "bl": "blocker",
+    "p": "prompt",
+    "s": "stamina",
+    "l": "lifespan",
+    "bt": "build_time",
+    "et": "exhaust_turn",
+    "ea": "exhaust_ability",
+    "pos": "position",
+    "a": "abilities",
+    }
+
 
 def parse_query(raw_query: str) -> Iterator[List[str]]:
     """
@@ -103,10 +126,9 @@ def filter_to_lookup(data: List[str]) -> Dict[str, Union[str, int]]:
         return {}
 
     field, operator, value = data
-    return {
-        f"{field}{OPERATORS_MAP[operator]}":
-        int(value) if value.isdigit() else value
-        }
+    field = SYNONYMS_MAP.get(field) or field
+    value = int(value) if value.isdigit() else value
+    return {f"{field}{OPERATORS_MAP[operator]}": value}
 
 
 def includes_excludes(

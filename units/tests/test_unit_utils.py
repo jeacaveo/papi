@@ -142,6 +142,99 @@ class FilterToDjangoTests(unittest.TestCase):
                     filter_to_lookup(params["filter"]),
                     params["expected_result"])
 
+    def test_synonyms(self):
+        """ Test all synonyms. """
+        # Given
+        data = {
+            "name": {
+                "filter": ["n", "=", "5"],
+                "expected_result": {"name__icontains": 5},
+                },
+            "gold": {
+                "filter": ["au", "=", "5"],
+                "expected_result": {"gold__icontains": 5},
+                },
+            "green": {
+                "filter": ["g", "=", "5"],
+                "expected_result": {"green__icontains": 5},
+                },
+            "blue": {
+                "filter": ["b", "=", "5"],
+                "expected_result": {"blue__icontains": 5},
+                },
+            "red": {
+                "filter": ["r", "=", "5"],
+                "expected_result": {"red__icontains": 5},
+                },
+            "energy": {
+                "filter": ["e", "=", "5"],
+                "expected_result": {"energy__icontains": 5},
+                },
+            "attack": {
+                "filter": ["x", "=", "5"],
+                "expected_result": {"attack__icontains": 5},
+                },
+            "health": {
+                "filter": ["h", "=", "5"],
+                "expected_result": {"health__icontains": 5},
+                },
+            "supply": {
+                "filter": ["su", "=", "5"],
+                "expected_result": {"supply__icontains": 5},
+                },
+            "frontline": {
+                "filter": ["fl", "=", "5"],
+                "expected_result": {"frontline__icontains": 5},
+                },
+            "fragile": {
+                "filter": ["f", "=", "5"],
+                "expected_result": {"fragile__icontains": 5},
+                },
+            "blocker": {
+                "filter": ["bl", "=", "5"],
+                "expected_result": {"blocker__icontains": 5},
+                },
+            "prompt": {
+                "filter": ["p", "=", "5"],
+                "expected_result": {"prompt__icontains": 5},
+                },
+            "stamina": {
+                "filter": ["s", "=", "5"],
+                "expected_result": {"stamina__icontains": 5},
+                },
+            "lifespan": {
+                "filter": ["l", "=", "5"],
+                "expected_result": {"lifespan__icontains": 5},
+                },
+            "build_time": {
+                "filter": ["bt", "=", "5"],
+                "expected_result": {"build_time__icontains": 5},
+                },
+            "exhaust_turn": {
+                "filter": ["et", "=", "5"],
+                "expected_result": {"exhaust_turn__icontains": 5},
+                },
+            "exhaust_ability": {
+                "filter": ["ea", "=", "5"],
+                "expected_result": {"exhaust_ability__icontains": 5},
+                },
+            "position": {
+                "filter": ["pos", "=", "5"],
+                "expected_result": {"position__icontains": 5},
+                },
+            "abilities": {
+                "filter": ["a", "=", "5"],
+                "expected_result": {"abilities__icontains": 5},
+                },
+            }
+
+        # When/Then
+        for name, params in data.items():
+            with self.subTest(name):
+                self.assertEqual(
+                    filter_to_lookup(params["filter"]),
+                    params["expected_result"])
+
 
 class IncludesExcludesTests(unittest.TestCase):
     """ Tests all cases for units.utils.inclues_excludes """

@@ -16,6 +16,28 @@ class LatestUnitVersionViewSet(viewsets.ReadOnlyModelViewSet):  # type: ignore
 
     /api/latest/units/?q=gold>3,frontline=true,abilities="gain X",name!=head
 
+    Shortcuts:
+        "n": "name",
+        "au": "gold",
+        "g": "green",
+        "b": "blue",
+        "r": "red",
+        "e": "energy",
+        "x": "attack",
+        "h": "health",
+        "su": "supply",
+        "fl": "frontline",
+        "f": "fragile",
+        "bl": "blocker",
+        "p": "prompt",
+        "s": "stamina",
+        "l": "lifespan",
+        "bt": "build_time",
+        "et": "exhaust_turn",
+        "ea": "exhaust_ability",
+        "pos": "position",
+        "a": "abilities",
+
     """
 
     # pylint: disable=no-member
