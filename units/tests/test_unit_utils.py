@@ -30,11 +30,11 @@ class ParseQueryTests(unittest.TestCase):
                 },
             "no_operator": {
                 "query": "gold",
-                "expected_result": [["gold"]]
+                "expected_result": []
                 },
             "underscore": {
-                "query": "some_field",
-                "expected_result": [["some_field"]]
+                "query": "some_field=val",
+                "expected_result": [["some_field", "=", "val"]]
                 },
             "spaces": {
                 "query": "name=double quoted",
@@ -58,7 +58,7 @@ class ParseQueryTests(unittest.TestCase):
                 },
             "no_value": {
                 "query": "gold=",
-                "expected_result": [["gold"]]
+                "expected_result": []
                 },
             "empty": {
                 "query": "",

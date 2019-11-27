@@ -3,7 +3,7 @@ from typing import (
     Dict,
     Iterator,
     List,
-    Optional as TOptional,
+    Optional,
     Tuple,
     Union,
     )
@@ -13,7 +13,6 @@ from pyparsing import (
     Combine,
     delimitedList,
     oneOf,
-    Optional,
     ParseException,
     Word,
     )
@@ -31,9 +30,7 @@ OPERATORS_MAP = {
     }
 SEARCH_OPERATORS = oneOf(" ".join(OPERATORS_MAP.keys()))
 SEARCH_FILTER = (
-    Word(alphas + "_") +
-    Optional(SEARCH_OPERATORS + Word(alphanums + "_" + " "))
-    )
+    Word(alphas + "_") + SEARCH_OPERATORS + Word(alphanums + "_" + " "))
 SEARCH_QUERY = delimitedList(Combine(SEARCH_FILTER), delim=",")
 
 SYNONYMS_MAP = {
@@ -132,7 +129,7 @@ def filter_to_lookup(data: List[str]) -> Dict[str, Union[str, int]]:
 
 
 def includes_excludes(
-        data: str, allowed: TOptional[List[str]] = None
+        data: str, allowed: Optional[List[str]] = None
         ) -> Tuple[Dict[str, Union[str, int]], Dict[str, Union[str, int]]]:
     """
     Convert query string into a dict of includes and excludes.

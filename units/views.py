@@ -12,33 +12,38 @@ class LatestUnitVersionViewSet(viewsets.ReadOnlyModelViewSet):  # type: ignore
     """
     API endpoint for latest version of each unit.
 
-    Sample query:
+    Example:
 
-    /api/latest/units/?q=gold>3,frontline=1,abilities="gain XXXX",name!=head
+        /api/latest/units/?q=gold>3,frontline=1,a=gain XXXX,name!=head
 
-    Operators: =, :, <, <=, >, >=, !=, <>
+    Invalid queries will be ignored.
+
+    Operators:
+
+        =, :, <, <=, >, >=, !=, <>
 
     Shortcuts:
-        "n": "name",
-        "au": "gold",
-        "g": "green",
-        "b": "blue",
-        "r": "red",
-        "e": "energy",
-        "x": "attack",
-        "h": "health",
-        "su": "supply",
-        "fl": "frontline",
-        "f": "fragile",
-        "bl": "blocker",
-        "p": "prompt",
-        "s": "stamina",
-        "l": "lifespan",
-        "bt": "build_time",
-        "et": "exhaust_turn",
-        "ea": "exhaust_ability",
-        "pos": "position",
-        "a": "abilities",
+
+        n: name
+        au: gold
+        g: green
+        b: blue
+        r: red
+        e: energy
+        x: attack
+        h: health
+        su: supply
+        fl: frontline
+        f: fragile
+        bl: blocker
+        p: prompt
+        s: stamina
+        l: lifespan
+        bt: build_time
+        et: exhaust_turn
+        ea: exhaust_ability
+        pos: position
+        a: abilities
 
     """
 

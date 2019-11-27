@@ -45,3 +45,5 @@ Documenation
     /api/docs/swagger/
 
     /api/docs/redoc/
+
+- Or go to the docstring for LatestUnitVersionViewSet in units/views.py.
