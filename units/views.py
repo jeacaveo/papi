@@ -14,7 +14,7 @@ class LatestUnitVersionViewSet(viewsets.ReadOnlyModelViewSet):  # type: ignore
 
     Sample query:
 
-    /api/latest/units/?q=gold>3,frontline=true,abilities="gain X",name!=head
+    /api/latest/units/?q=gold>3,frontline=1,abilities="gain XXXX",name!=head
 
     Operators: =, :, <, <=, >, >=, !=, <>
 
