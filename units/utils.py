@@ -127,7 +127,7 @@ def filter_to_lookup(data: List[str]) -> Dict[str, Union[str, int]]:
 
     field, operator, value = data
     field = SYNONYMS_MAP.get(field) or field
-    value = int(value) if value.isdigit() else value
+    value = int(value) if value.isdigit() else value  # type: ignore
     return {f"{field}{OPERATORS_MAP[operator]}": value}
 
 
@@ -163,9 +163,10 @@ def includes_excludes(
     for raw_filter in parse_query(data):
         negative_operators = ["!=", "<>"]
         lookup = filter_to_lookup(raw_filter)
+        field = SYNONYMS_MAP.get(raw_filter[0]) or raw_filter[0]
 
         # Only consider allowed fields
-        if (allowed and raw_filter[0] not in allowed) or False:
+        if (allowed and field not in allowed) or False:
             ignored.update(lookup)
         elif set(negative_operators).intersection(raw_filter):
             excludes.update(lookup)

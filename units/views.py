@@ -16,6 +16,8 @@ class LatestUnitVersionViewSet(viewsets.ReadOnlyModelViewSet):  # type: ignore
 
     /api/latest/units/?q=gold>3,frontline=true,abilities="gain X",name!=head
 
+    Operators: =, :, <, <=, >, >=, !=, <>
+
     Shortcuts:
         "n": "name",
         "au": "gold",
@@ -51,6 +53,7 @@ class LatestUnitVersionViewSet(viewsets.ReadOnlyModelViewSet):  # type: ignore
         Split filters into includes and excludes depeding on the operator
 
         """
+        # pylint: disable=protected-access
         includes, excludes = includes_excludes(
             self.request.GET.get("q") or "",
             allowed=[
