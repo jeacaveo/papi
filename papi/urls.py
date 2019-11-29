@@ -35,7 +35,7 @@ SchemaView = get_schema_view(
         default_version='v1',
         description="REST API for Prismata related data.",
         terms_of_service="https://www.google.com/policies/terms/",
-        contact=openapi.Contact(email="jv@venturasystems.net"),
+        contact=openapi.Contact(email="info@ancobl.in"),
         license=openapi.License(name="AGPLv3+ License"),
         ),
     public=True,
