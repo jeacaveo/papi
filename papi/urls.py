@@ -60,6 +60,5 @@ urlpatterns = [  # pylint: disable=invalid-name
         r'^api/docs/redoc/$',
         SchemaView.with_ui('redoc', cache_timeout=0),
         name='schema-redoc'),
-    path("api/auth/", include("rest_framework.urls")),
     path("api/", include(ROUTER.urls)),
     ]
