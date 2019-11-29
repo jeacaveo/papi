@@ -224,3 +224,6 @@ REST_FRAMEWORK = {
         "destroy": "delete"
         },
     }
+
+# pylint: disable=wildcard-import,wrong-import-position
+from papi.settings_local import *  # noqa
