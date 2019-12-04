@@ -58,7 +58,7 @@ class LatestUnitVersionCleanTests(unittest.TestCase):
         # Then
         self.assertEqual(result, expected_result)
         self.queryset_mock.assert_has_calls([
-            call.filter(gold__icontains=5),
+            call.filter(gold=5),
             call.exclude(),
             ])
 
@@ -80,7 +80,7 @@ class LatestUnitVersionCleanTests(unittest.TestCase):
         self.assertEqual(result, expected_result)
         self.queryset_mock.assert_has_calls([
             call.filter(),
-            call.exclude(gold__icontains=5),
+            call.exclude(gold=5),
             ])
 
     def test_both(self):
@@ -100,8 +100,8 @@ class LatestUnitVersionCleanTests(unittest.TestCase):
         # Then
         self.assertEqual(result, expected_result)
         self.queryset_mock.assert_has_calls([
-            call.filter(gold__icontains=5),
-            call.exclude(gold__icontains=5),
+            call.filter(gold=5),
+            call.exclude(gold=5),
             ])
 
     def test_invalid_field(self):
@@ -126,6 +126,6 @@ class LatestUnitVersionCleanTests(unittest.TestCase):
         # Then
         self.assertEqual(result, expected_result)
         self.queryset_mock.assert_has_calls([
-            call.filter(gold__icontains=5),
-            call.exclude(gold__icontains=5),
+            call.filter(gold=5),
+            call.exclude(gold=5),
             ])

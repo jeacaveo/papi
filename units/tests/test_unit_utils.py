@@ -115,7 +115,7 @@ class FilterToDjangoTests(unittest.TestCase):
                 },
             "number": {
                 "filter": ["name", ":", "5"],
-                "expected_result": {"name__icontains": 5},
+                "expected_result": {"name": 5},
                 },
             "empty": {
                 "filter": [],
@@ -147,84 +147,84 @@ class FilterToDjangoTests(unittest.TestCase):
         # Given
         data = {
             "name": {
-                "filter": ["n", "=", "5"],
-                "expected_result": {"name__icontains": 5},
+                "filter": ["n", "=", "x"],
+                "expected_result": {"name__icontains": "x"},
                 },
             "gold": {
                 "filter": ["au", "=", "5"],
-                "expected_result": {"gold__icontains": 5},
+                "expected_result": {"gold": 5},
                 },
             "green": {
                 "filter": ["g", "=", "5"],
-                "expected_result": {"green__icontains": 5},
+                "expected_result": {"green": 5},
                 },
             "blue": {
                 "filter": ["b", "=", "5"],
-                "expected_result": {"blue__icontains": 5},
+                "expected_result": {"blue": 5},
                 },
             "red": {
                 "filter": ["r", "=", "5"],
-                "expected_result": {"red__icontains": 5},
+                "expected_result": {"red": 5},
                 },
             "energy": {
                 "filter": ["e", "=", "5"],
-                "expected_result": {"energy__icontains": 5},
+                "expected_result": {"energy": 5},
                 },
             "attack": {
                 "filter": ["x", "=", "5"],
-                "expected_result": {"attack__icontains": 5},
+                "expected_result": {"attack": 5},
                 },
             "health": {
                 "filter": ["h", "=", "5"],
-                "expected_result": {"health__icontains": 5},
+                "expected_result": {"health": 5},
                 },
             "supply": {
                 "filter": ["su", "=", "5"],
-                "expected_result": {"supply__icontains": 5},
+                "expected_result": {"supply": 5},
                 },
             "frontline": {
                 "filter": ["fl", "=", "5"],
-                "expected_result": {"frontline__icontains": 5},
+                "expected_result": {"frontline": 5},
                 },
             "fragile": {
                 "filter": ["f", "=", "5"],
-                "expected_result": {"fragile__icontains": 5},
+                "expected_result": {"fragile": 5},
                 },
             "blocker": {
                 "filter": ["bl", "=", "5"],
-                "expected_result": {"blocker__icontains": 5},
+                "expected_result": {"blocker": 5},
                 },
             "prompt": {
                 "filter": ["p", "=", "5"],
-                "expected_result": {"prompt__icontains": 5},
+                "expected_result": {"prompt": 5},
                 },
             "stamina": {
                 "filter": ["s", "=", "5"],
-                "expected_result": {"stamina__icontains": 5},
+                "expected_result": {"stamina": 5},
                 },
             "lifespan": {
                 "filter": ["l", "=", "5"],
-                "expected_result": {"lifespan__icontains": 5},
+                "expected_result": {"lifespan": 5},
                 },
             "build_time": {
                 "filter": ["bt", "=", "5"],
-                "expected_result": {"build_time__icontains": 5},
+                "expected_result": {"build_time": 5},
                 },
             "exhaust_turn": {
                 "filter": ["et", "=", "5"],
-                "expected_result": {"exhaust_turn__icontains": 5},
+                "expected_result": {"exhaust_turn": 5},
                 },
             "exhaust_ability": {
                 "filter": ["ea", "=", "5"],
-                "expected_result": {"exhaust_ability__icontains": 5},
+                "expected_result": {"exhaust_ability": 5},
                 },
             "position": {
-                "filter": ["pos", "=", "5"],
-                "expected_result": {"position__icontains": 5},
+                "filter": ["pos", "=", "x"],
+                "expected_result": {"position__icontains": "x"},
                 },
             "abilities": {
-                "filter": ["a", "=", "5"],
-                "expected_result": {"abilities__icontains": 5},
+                "filter": ["a", "=", "x"],
+                "expected_result": {"abilities__icontains": "x"},
                 },
             }
 
@@ -246,17 +246,17 @@ class IncludesExcludesTests(unittest.TestCase):
             "includes": {
                 "data": "gold=5",
                 "expected_result": (
-                    {"gold__icontains": 5}, {}),
+                    {"gold": 5}, {}),
                 },
             "excludes": {
                 "data": "gold!=5",
                 "expected_result": (
-                    {}, {"gold__icontains": 5}),
+                    {}, {"gold": 5}),
                 },
             "both": {
                 "data": "gold=5,gold!=5",
                 "expected_result": (
-                    {"gold__icontains": 5}, {"gold__icontains": 5}),
+                    {"gold": 5}, {"gold": 5}),
                 },
             "empty": {
                 "data": "",
@@ -275,7 +275,7 @@ class IncludesExcludesTests(unittest.TestCase):
         """ Test only return keys in the allowed list. """
         # Given
         data = "gold=5,bad_field=5"
-        expected_result = {"gold__icontains": 5}, {}
+        expected_result = {"gold": 5}, {}
 
         # When
         result = includes_excludes(data, allowed=["gold"])

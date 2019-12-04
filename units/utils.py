@@ -121,11 +121,17 @@ def filter_to_lookup(data: List[str]) -> Dict[str, Union[str, int]]:
     """
     if len(data) != 3 or data[1] not in OPERATORS_MAP:
         return {}
-
     field, operator, value = data
+
     field = SYNONYMS_MAP.get(field) or field
-    value = int(value) if value.isdigit() else value  # type: ignore
-    return {f"{field}{OPERATORS_MAP[operator]}": value}
+    is_digit = value.isdigit()
+    lookup = (
+        ""
+        if is_digit and data[1] in ["=", ":", "!=", "<>"]
+        else OPERATORS_MAP[operator])
+    value = int(value) if is_digit else value  # type: ignore
+
+    return {f"{field}{lookup}": value}
 
 
 def includes_excludes(
