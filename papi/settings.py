@@ -29,6 +29,10 @@ DEBUG = True
 
 ALLOWED_HOSTS: List[str] = []
 
+ADMINS = [
+    ("Support", "info@ancobl.in"),
+    ]
+
 
 # Application definition
 
@@ -132,6 +136,58 @@ USE_TZ = True
 STATIC_URL = "/static/"
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.webfaction.com"
+EMAIL_PORT = 25
+EMAIL_HOST_USER = "info_ancoblin"
+EMAIL_HOST_PASSWORD = ""
+SERVER_EMAIL = "papi@ancobl.in"
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format":
+            "{levelname} {asctime} {module} {process:d} {thread:d} {message}",
+            "style": "{",
+            },
+        "simple": {
+            "format": "{asctime} {levelname} {message}",
+            "style": "{",
+            },
+        },
+    "handlers": {
+        "console": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+            "formatter": "verbose",
+            },
+        "file": {
+            "level": "DEBUG",
+            "class": "logging.FileHandler",
+            "filename": "log",
+            "formatter": "verbose",
+            },
+        "mail_admins": {
+            "level": "ERROR",
+            "class": "django.utils.log.AdminEmailHandler",
+            "include_html": True,
+            }
+        },
+    "loggers": {
+        "django": {
+            "handlers": ["console", "file"],
+            "propagate": True,
+            },
+        "django.request": {
+            "handlers": ["mail_admins"],
+            "level": "ERROR",
+            "propagate": True,
+            },
+        }
+    }
 
 REST_FRAMEWORK = {
     # Base API policies
